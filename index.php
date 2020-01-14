@@ -1,4 +1,12 @@
 <?php
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+    include ("cupcake.php");
+
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,26 +19,22 @@
 </head>
 <body>
 <h1>Cupcake Fundraiser</h1>
-    <form>
+    <form action="index.php" method="post">
         <label for="name">Your Name:</label><br>
         <input name="name" id="name" type="text" placeholder="Please input your name."><br>
         <label for="options">Cupcake flavors:</label><br>
-        <input type="checkbox" name="options" value="">The Grasshopper<br>
-        <input type="checkbox" name="options" value="">Whisky Maple Bacon<br>
-        <input type="checkbox" name="options" value="">Carrot Walnut<br>
-        <input type="checkbox" name="options" value="">Salted Caramel Cupcake<br>
-        <input type="checkbox" name="options" value="">Red Velvet<br>
-        <input type="checkbox" name="options" value="">Lemon Drop<br>
-        <input type="checkbox" name="options" value="">Tiramisu<br>
+        <?php
+        foreach ($cupcake as $key => $value) { ?>
+        <input type="checkbox" name="cupcakes[]" value="<?php echo $key; ?>">
+        <label for="<?php echo $key;?>"><?php echo $value?></label><br>
+        <?php }?>
+
         <button type="submit">Order</button>
-<!--        --><?php
-//            $flavors = array("grasshopper" => "The Grasshopper", 'maple' => 'Whiskey Maple Bacon',
-//                "carrot" => "Carrot Walnut", "caramel" => "Salted Caramel Cupcake", "velvet" => "Red Velvet",
-//                "lemon" => "Lemon Drop", "tiramisu" => "Tiramisu");
-//        ?>
-
-
-
     </form>
+
+
+<?php
+    echo $summary;
+?>
 </body>
 </html>
