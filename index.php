@@ -5,8 +5,33 @@ error_reporting(E_ALL);
 
     include ("cupcake.php");
 
+$nameIsValid = true;
+$cupIsValid = true;
+if ($_SERVER["REQUEST_METHOD"] === "post") {
 
+    if(empty($_POST["name"]) || empty(trim($_POST["name"]))) {
+        $nameIsValid = false;
+    } else {
+        $name = $_POST["name"];
+    }
 
+    if(empty($_POST["cupcakes"])) {
+        $cupIsValid = false;
+    } else {
+        foreach ($_POST["cupcakes"] as $value) {
+            if (!array_key_exists($value, $cupcake)) {
+                $cupIsValid = false;
+            } else {
+                $cupcake = $_POST["cupcakes"];
+            }
+        }
+    }
+
+//    $total = 0;
+//    if ($cupIsValid && $nameIsValid) {
+//        $summary = "<p>Thank you, " . $name . ", for your purchase</p>";
+//    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -30,11 +55,13 @@ error_reporting(E_ALL);
         <?php }?>
 
         <button type="submit">Order</button>
+        <p class="err" <?php if ($cupIsValid) echo "d-none"; ?> id="cup-err">Must select at least one cupcake</p>
+        <p class="err1" <?php if ($nameIsValid) echo "d-none"; ?> id="cup-err">Must enter a name</p>
     </form>
 
 
 <?php
-    echo $summary;
+//    echo $summary;
 ?>
 </body>
 </html>
