@@ -5,8 +5,6 @@ error_reporting(E_ALL);
 
     include ("cupcake.php");
 
-    $name = "";
-    $array = [];
 $nameIsValid = true;
 $cupIsValid = true;
 if ($_SERVER["REQUEST_METHOD"] === "post") {
@@ -24,23 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] === "post") {
             if (!array_key_exists($value, $cupcake)) {
                 $cupIsValid = false;
             } else {
-                $array[] = $value;
+                $cupcake = $_POST["cupcakes"];
             }
         }
     }
 
-    $total = 0;
-    if ($cupIsValid && $nameIsValid) {
-        $summary = "<p>Thank you, " . $name . ", for your purchase</p>";
-        $summary .= "<h2>Order Summary</h2><ul>";
-        foreach ($array as $value) {
-            $summary .= "<li>$cupcake[$value]</li>";
-            $total += 3.50;
-        }
-        $summary .= "</ul>";
-        $total = number_format($total, 2);
-        $summary .= "<p>Order Total: $total</p>";
-    }
+//    $total = 0;
+//    if ($cupIsValid && $nameIsValid) {
+//        $summary = "<p>Thank you, " . $name . ", for your purchase</p>";
+//    }
 }
 ?>
 <!doctype html>
@@ -57,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] === "post") {
     <form action="index.php" method="post">
         <label for="name">Your Name:</label><br>
         <input name="name" id="name" type="text" placeholder="Please input your name."><br>
-        <p class="err1" <?php if ($nameIsValid) echo "d-none"; ?> id="cup-err">Must enter a name</p>
         <label for="options">Cupcake flavors:</label><br>
         <?php
         foreach ($cupcake as $key => $value) { ?>
@@ -67,11 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] === "post") {
 
         <button type="submit">Order</button>
         <p class="err" <?php if ($cupIsValid) echo "d-none"; ?> id="cup-err">Must select at least one cupcake</p>
-
+        <p class="err1" <?php if ($nameIsValid) echo "d-none"; ?> id="cup-err">Must enter a name</p>
     </form>
 
-<div
-<?php echo $summary; ?>
-</div>
+
+<?php
+//    echo $summary;
+?>
 </body>
 </html>
